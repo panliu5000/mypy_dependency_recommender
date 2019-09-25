@@ -7,10 +7,10 @@ from multiprocessing import Process, Queue
 
 Q = Queue()
 
-CMDpipdownload2 = 'pip3 download {package} -d {tempdir} --no-binary :all: --no-deps --extra-index-url=https://pypi.lyft.net/simple'
 CMDpipdownload = 'pip3 download {package} -d {tempdir} --python-version 3 --no-deps --extra-index-url=https://pypi.lyft.net/simple'
 CMDgetdownloadedpackage = 'find {dir} -name {pattern}'
 PYTYPED = 'py.typed'
+REQUIREMENTS_FILE = '/Users/panliu/src/projectxyz/requirements3.txt'
 
 
 def tar_contains_pytyped_files(members) -> bool:
@@ -71,7 +71,7 @@ def process_func(pkg, q):
 
 def run():
     processes = [Process(target=process_func, args=(pkg, Q,))
-                 for pkg in get_direct_dep_packages('/Users/panliu/src/enterprise/requirements3.txt')]
+                 for pkg in get_direct_dep_packages(REQUIREMENTS_FILE)]
 
     for p in processes:
         p.start()
